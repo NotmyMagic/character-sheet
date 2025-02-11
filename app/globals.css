@@ -2,20 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-orange-200;
+  }
+  button {
+    @apply hover:scale-110 transition-all duration-100;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .btn {
+    @apply border-2 border-orange-400 rounded-md;
+  }
+  .btn-danger {
+    @apply border-2 bg-red-600 border-red-950;
+  }
 }
