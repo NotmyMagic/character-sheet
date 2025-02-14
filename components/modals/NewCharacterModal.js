@@ -14,7 +14,7 @@ function NewCharacterModal({ show, onClose }) {
   const levelRef = useRef();
   const classRef = useRef();
   const raceRef = useRef();
-  const { characters, newCharacterSheet } = useContext(charContext);
+  const { newCharacterSheet } = useContext(charContext);
 
   // handler
   const createNewCharacter = async (e) => {

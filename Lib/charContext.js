@@ -1,11 +1,12 @@
 "use client";
 
-import NewCharacterModal from "@/components/modals/NewCharacterModal";
+// import NewCharacterModal from "@/components/modals/NewCharacterModal";
 import { db } from "@/Lib/firebase";
 import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   doc,
   deleteDoc,
   updateDoc,
@@ -17,11 +18,22 @@ export const charContext = createContext({
   characters: [],
   newCharacterSheet: async () => {},
   deleteCharacter: async () => {},
+  getChar: async () => {},
 });
 
 // all elements that view this function can view all functions inside of it
 export default function CharContextProvider({ children }) {
   const [characters, setCharacters] = useState([]);
+
+  const getChar = async (id) => {
+    try {
+      const docRef = doc(db, "characters", id);
+      const docSnap = await getDoc(docRef);
+      return docSnap.data();
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const newCharacterSheet = async (newCharacter) => {
     const collectionRef = collection(db, "characters");
@@ -61,6 +73,7 @@ export default function CharContextProvider({ children }) {
     characters,
     newCharacterSheet,
     deleteCharacter,
+    getChar,
   };
 
   useEffect(() => {
