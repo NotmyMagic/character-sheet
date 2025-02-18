@@ -78,7 +78,14 @@ function NewCharacterModal({ show, onClose }) {
             placeholder="Race"
             required
           />
-          <button type="submit">Create Character</button>
+          <button
+            onClick={() => {
+              onClose(false);
+            }}
+            type="submit"
+          >
+            Create Character
+          </button>
         </div>
       </form>
     </Modal>
