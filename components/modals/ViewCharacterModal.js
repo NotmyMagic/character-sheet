@@ -28,11 +28,10 @@ function ViewCharacterModal({ show, onClose }) {
 
         {characters.map((i) => {
           return (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between" key={i.id}>
               <Link
                 className="flex items-center justify-between"
                 href={"/" + i.id}
-                key={i.id}
               >
                 <div className="flex justify-between gap-4 btn">
                   <p className="capitalize">Name: {i.name}</p>
