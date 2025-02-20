@@ -19,17 +19,55 @@ export const charContext = createContext({
   newCharacterSheet: async () => {},
   deleteCharacter: async () => {},
   getChar: async () => {},
+  updateChar: async () => {},
 });
 
 // all elements that view this function can view all functions inside of it
 export default function CharContextProvider({ children }) {
   const [characters, setCharacters] = useState([]);
 
-  const getChar = async (id) => {
+  const getChar = async (characterId) => {
+    const docRef = doc(db, "characters", characterId);
+
     try {
-      const docRef = doc(db, "characters", id);
       const docSnap = await getDoc(docRef);
       return docSnap.data();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const updateChar = async (characterId, updateCharacter) => {
+    const docRef = doc(db, "characters", characterId);
+
+    try {
+      await updateDoc(docRef, {
+        name: updateCharacter.name,
+        level: updateCharacter.level,
+        class: updateCharacter.class,
+        race: updateCharacter.race,
+      });
+
+      // update state
+      setCharacters((prevState) => {
+        const updatedChar = [...prevState];
+
+        const foundIndex = updatedChar.findIndex((character) => {
+          return character.id === characterId;
+        });
+
+        if (foundIndex !== -1) {
+          updatedChar[foundIndex] = {
+            id: characterId,
+            name: updateCharacter.name,
+            level: updateCharacter.level,
+            class: updateCharacter.class,
+            race: updateCharacter.race,
+          };
+        }
+
+        return updatedChar;
+      });
     } catch (error) {
       throw error;
     }
@@ -74,6 +112,7 @@ export default function CharContextProvider({ children }) {
     newCharacterSheet,
     deleteCharacter,
     getChar,
+    updateChar,
   };
 
   useEffect(() => {
@@ -86,6 +125,7 @@ export default function CharContextProvider({ children }) {
           id: doc.id,
           ...doc.data(),
           createdAt: new Date(doc.data().createdAt.toMillis()),
+          // firebase and react have different date formats toMillies makes them equal
         };
       });
 

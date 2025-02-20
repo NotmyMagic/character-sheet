@@ -43,15 +43,12 @@ function NewCharacterModal({ show, onClose }) {
     <Modal show={show} onClose={onClose}>
       <form onSubmit={createNewCharacter}>
         <div className="flex flex-col items-center gap-2 ">
-          <label>Create new character</label>
+          <label className="text-2xl">Create New Character</label>
           <input
             className="w-80"
             type="text"
             name="name"
             ref={nameRef}
-            min={1}
-            max={20}
-            step={1}
             placeholder="Name"
             required
           />
@@ -60,6 +57,9 @@ function NewCharacterModal({ show, onClose }) {
             type="number"
             name="level"
             ref={levelRef}
+            min={1}
+            max={20}
+            step={1}
             required
           />
           <input
@@ -83,8 +83,9 @@ function NewCharacterModal({ show, onClose }) {
               onClose(false);
             }}
             type="submit"
+            className="btn"
           >
-            Create Character
+            Create
           </button>
         </div>
       </form>
