@@ -2,7 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+
 import { charContext } from "@/Lib/charContext";
+import { authContext } from "@/Lib/authContext";
+
 import Modal from "@/components/Modal";
 
 const LoadCharacter = () => {
@@ -48,7 +51,7 @@ const LoadCharacter = () => {
 
     try {
       await updateChar(id, updateCharacter);
-      console.log(updateCharacter);
+      // console.log(updateCharacter);
     } catch (error) {
       console.log(error.message);
     }

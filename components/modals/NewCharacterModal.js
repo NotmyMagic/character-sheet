@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useContext } from "react";
+import { useRef, useContext } from "react";
 
 import Modal from "../Modal";
 
@@ -8,6 +8,7 @@ import Modal from "../Modal";
 // import { collection, addDoc, getDocs } from "firebase/firestore";
 
 import { charContext } from "@/Lib/charContext";
+import { authContext } from "@/Lib/authContext";
 
 function NewCharacterModal({ show, onClose }) {
   const nameRef = useRef();
@@ -15,6 +16,7 @@ function NewCharacterModal({ show, onClose }) {
   const classRef = useRef();
   const raceRef = useRef();
   const { newCharacterSheet } = useContext(charContext);
+  const { user } = useContext(authContext);
 
   // handler
   const createNewCharacter = async (e) => {
@@ -26,6 +28,7 @@ function NewCharacterModal({ show, onClose }) {
       class: classRef.current.value,
       race: raceRef.current.value,
       createdAt: new Date(),
+      uid: user.uid,
     };
 
     try {

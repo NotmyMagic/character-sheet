@@ -13,7 +13,7 @@
 
 @layer utilities {
   .btn {
-    @apply border-2 border-orange-400 rounded-md p-1;
+    @apply border-2 border-orange-800 rounded-md p-1;
   }
   .btn-danger {
     @apply border-2 bg-red-600 border-red-950 p-1;

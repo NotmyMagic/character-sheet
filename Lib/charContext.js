@@ -11,8 +11,11 @@ import {
   deleteDoc,
   updateDoc,
   query,
+  where,
 } from "firebase/firestore";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
+
+import { authContext } from "./authContext";
 
 export const charContext = createContext({
   characters: [],
@@ -25,6 +28,8 @@ export const charContext = createContext({
 // all elements that view this function can view all functions inside of it
 export default function CharContextProvider({ children }) {
   const [characters, setCharacters] = useState([]);
+
+  const { user } = useContext(authContext);
 
   const getChar = async (characterId) => {
     const docRef = doc(db, "characters", characterId);
@@ -116,9 +121,13 @@ export default function CharContextProvider({ children }) {
   };
 
   useEffect(() => {
+    if (!user) return;
+
     const getCharacterData = async () => {
       const collectionRef = collection(db, "characters");
-      const docsSnap = await getDocs(collectionRef);
+      const q = query(collectionRef, where("uid", "==", user.uid));
+
+      const docsSnap = await getDocs(q);
 
       const data = docsSnap.docs.map((doc) => {
         return {
@@ -133,7 +142,7 @@ export default function CharContextProvider({ children }) {
     };
 
     getCharacterData();
-  }, []);
+  }, [user]);
 
   return <charContext.Provider value={values}>{children}</charContext.Provider>;
 }
