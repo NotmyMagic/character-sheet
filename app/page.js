@@ -1,13 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+import { authContext } from "@/Lib/authContext";
 
 import NewCharacterModal from "@/components/modals/NewCharacterModal";
 import ViewCharacterModal from "@/components/modals/ViewCharacterModal";
+import SignIn from "@/components/SignIn";
 
 export default function Home() {
   const [showNewCharacterModal, setShowNewCharacterModal] = useState(false);
   const [showViewCharacterModal, setShowViewCharacterModal] = useState(false);
+
+  const { user } = useContext(authContext);
+
+  if (!user) {
+    return <SignIn />;
+  }
 
   return (
     <>
