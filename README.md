@@ -1,3 +1,6 @@
+This is a simple full stack application that users can log in to setup and keep track of characters from D&D games.
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
